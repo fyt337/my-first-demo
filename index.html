@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>茶小卷 · 现煮奶茶</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238b5a2b'/%3E%3Cpath d='M10 10h12l-1.5 12a2 2 0 0 1-2 1.8h-5a2 2 0 0 1-2-1.8L10 10z' fill='%23f7efe3'/%3E%3Ccircle cx='14' cy='20' r='1.2' fill='%238b5a2b'/%3E%3Ccircle cx='18' cy='22' r='1.2' fill='%238b5a2b'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#f7efe3;
+    --surface:#fffaf2;
+    --ink:#3b2416;
+    --ink-soft:#6b4a33;
+    --primary:#8b5a2b;
+    --accent:#c97b3d;
+    --line:#e5d3b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Noto Sans SC",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .serif{font-family:"Noto Serif SC",serif;}
+
+  /* ===== 顶部 ===== */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:20px 32px;max-width:1080px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);}
+  .brand-mark{
+    width:40px;height:40px;border-radius:10px;background:var(--primary);
+    display:grid;place-items:center;color:#fffaf2;
+  }
+  .brand-name{font-family:"Noto Serif SC",serif;font-weight:900;font-size:22px;letter-spacing:2px;}
+  .brand-sub{font-size:11px;color:var(--ink-soft);letter-spacing:3px;margin-top:2px;}
+  nav{display:flex;gap:28px}
+  nav a{
+    color:var(--ink-soft);text-decoration:none;font-size:14px;
+    padding-bottom:2px;border-bottom:1px solid transparent;transition:border-color .2s;
+  }
+  nav a:hover{border-color:var(--primary);color:var(--ink);}
+
+  /* ===== Hero ===== */
+  .hero{
+    max-width:1080px;margin:0 auto;padding:48px 32px 24px;
+    display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;
+  }
+  .hero h1{
+    font-family:"Noto Serif SC",serif;font-weight:900;
+    font-size:clamp(32px,5vw,52px);line-height:1.2;letter-spacing:2px;
+  }
+  .hero h1 em{font-style:normal;color:var(--accent);}
+  .hero p{color:var(--ink-soft);margin-top:16px;max-width:38ch;font-size:15px;}
+  .hero-tag{
+    justify-self:end;writing-mode:vertical-rl;
+    font-size:12px;letter-spacing:6px;color:var(--primary);
+    border-left:1px solid var(--line);padding-left:16px;height:120px;
+  }
+
+  /* ===== 菜单 ===== */
+  .menu{
+    max-width:1080px;margin:24px auto;padding:24px 32px 64px;
+  }
+  .menu-head{
+    display:flex;align-items:baseline;justify-content:space-between;
+    border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:8px;
+  }
+  .menu-head h2{font-family:"Noto Serif SC",serif;font-size:22px;font-weight:700;letter-spacing:3px;}
+  .menu-head span{font-size:12px;color:var(--ink-soft);letter-spacing:2px;}
+
+  .item{
+    display:grid;grid-template-columns:96px 1fr auto;gap:24px;align-items:center;
+    padding:22px 0;border-bottom:1px dashed var(--line);
+  }
+  .item:last-child{border-bottom:none}
+  .thumb{
+    width:96px;height:96px;border-radius:14px;
+    display:grid;place-items:center;color:#fff;position:relative;overflow:hidden;
+  }
+  .thumb svg{width:44px;height:44px;opacity:.92}
+  .thumb .ph{
+    position:absolute;bottom:6px;left:0;right:0;text-align:center;
+    font-size:9px;letter-spacing:1px;opacity:.75;
+  }
+  /* 每款奶茶不同的奶汤色 */
+  .t1{background:linear-gradient(135deg,#c89b6d,#8b5a2b)}
+  .t2{background:linear-gradient(135deg,#6f4e37,#3b2416)}
+  .t3{background:linear-gradient(135deg,#d9b38c,#a9744f)}
+  .t4{background:linear-gradient(135deg,#b8c99a,#7a8b5a)}
+  .t5{background:linear-gradient(135deg,#a8b58a,#5e6b3f)}
+
+  .info h3{font-family:"Noto Serif SC",serif;font-size:19px;font-weight:700;letter-spacing:1px;}
+  .info .desc{font-size:13px;color:var(--ink-soft);margin-top:4px;}
+  .price{
+    font-family:"Noto Serif SC",serif;font-size:22px;font-weight:700;color:var(--accent);
+    white-space:nowrap;
+  }
+  .price small{font-size:12px;font-weight:400;color:var(--ink-soft);margin-right:2px;}
+
+  /* ===== 底部 ===== */
+  footer{
+    background:var(--ink);color:#f0e2cd;margin-top:24px;
+  }
+  .foot-inner{
+    max-width:1080px;margin:0 auto;padding:48px 32px;
+    display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;
+  }
+  footer h4{
+    font-family:"Noto Serif SC",serif;font-size:15px;letter-spacing:2px;
+    color:#fffaf2;margin-bottom:14px;font-weight:700;
+  }
+  footer p{font-size:13.5px;line-height:1.9;color:#d9c4a8;}
+  .foot-brand{font-family:"Noto Serif SC",serif;font-size:26px;font-weight:900;color:#fffaf2;letter-spacing:3px;margin-bottom:10px;}
+  .copyright{
+    text-align:center;font-size:12px;color:#a88a6a;
+    padding:18px 32px;border-top:1px solid #5a3e28;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width:720px){
+    header{padding:16px 20px}
+    nav{display:none}
+    .hero{grid-template-columns:1fr;padding:32px 20px 8px;gap:16px}
+    .hero-tag{display:none}
+    .menu{padding:16px 20px 48px}
+    .item{grid-template-columns:72px 1fr;gap:16px}
+    .thumb{width:72px;height:72px;border-radius:10px}
+    .thumb svg{width:32px;height:32px}
+    .price{grid-column:2;justify-self:start;margin-top:-6px}
+    .foot-inner{grid-template-columns:1fr;gap:24px;padding:36px 20px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#top">
+    <span class="brand-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/>
+        <path d="M7.5 8a4.5 4.5 0 0 1 9 0"/>
+        <circle cx="10" cy="17" r=".9" fill="currentColor"/>
+        <circle cx="13.5" cy="18.5" r=".9" fill="currentColor"/>
+      </svg>
+    </span>
+    <span>
+      <div class="brand-name">茶小卷</div>
+      <div class="brand-sub">CHA XIAO JUAN</div>
+    </span>
+  </a>
+  <nav>
+    <a href="#menu">招牌菜单</a>
+    <a href="#visit">到店信息</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <h1>现煮茶汤，<br>一杯<em>小卷</em>的温度。</h1>
+    <p>每日清晨现煮茶底，鲜奶当日配送。不做茶粉，不勾兑糖精——这是我们对一杯奶茶最基本的认真。</p>
+  </div>
+  <div class="hero-tag">HANDMADE · SINCE 2023</div>
+</section>
+
+<main class="menu" id="menu">
+  <div class="menu-head">
+    <h2>招牌五款</h2>
+    <span>每日限量 · 售完即止</span>
+  </div>
+
+  <div class="item">
+    <div class="thumb t1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><circle cx="10" cy="17" r="1" fill="currentColor"/><circle cx="13.5" cy="18.5" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/></svg>
+      <span class="ph">图片占位</span>
+    </div>
+    <div class="info">
+      <h3>经典珍珠奶茶</h3>
+      <div class="desc">锡兰红茶底，鲜奶调和，手煮黑糖珍珠 Q 弹有嚼劲。</div>
+    </div>
+    <div class="price"><small>¥</small>12</div>
+  </div>
+
+  <div class="item">
+    <div class="thumb t2">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M8 12c1.5 1 3-1 4.5 0s3 1 4.5 0"/></svg>
+      <span class="ph">图片占位</span>
+    </div>
+    <div class="info">
+      <h3>黑糖珍珠鲜奶</h3>
+      <div class="desc">熬煮两小时的黑糖挂壁，搭配冰鲜奶，老虎斑纹理每杯现摇。</div>
+    </div>
+    <div class="price"><small>¥</small>16</div>
+  </div>
+
+  <div class="item">
+    <div class="thumb t3">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M8 14c2 1.5 6-1.5 8 0"/><circle cx="11" cy="18" r="1" fill="currentColor"/></svg>
+      <span class="ph">图片占位</span>
+    </div>
+    <div class="info">
+      <h3>芋泥波波</h3>
+      <div class="desc">每日现蒸广西槟榔芋，打成绵密芋泥，铺一层小芋圆。</div>
+    </div>
+    <div class="price"><small>¥</small>15</div>
+  </div>
+
+  <div class="item">
+    <div class="thumb t4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M9 5c0-1 1-1 1-2M12 5c0-1 1-1 1-2M15 5c0-1 1-1 1-2"/></svg>
+      <span class="ph">图片占位</span>
+    </div>
+    <div class="info">
+      <h3>茉莉奶绿</h3>
+      <div class="desc">伏天茉莉花茶窨七次，清润不苦，加鲜奶后花香更显。</div>
+    </div>
+    <div class="price"><small>¥</small>13</div>
+  </div>
+
+  <div class="item">
+    <div class="thumb t5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1.2 11a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8z"/><path d="M8 11h8M8.5 14h7"/></svg>
+      <span class="ph">图片占位</span>
+    </div>
+    <div class="info">
+      <h3>宇治抹茶鲜奶</h3>
+      <div class="desc">当天现磨抹茶粉，茶筅打匀，与冰鲜奶分层出品。</div>
+    </div>
+    <div class="price"><small>¥</small>18</div>
+  </div>
+</main>
+
+<footer id="visit">
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">茶小卷</div>
+      <p>一杯现煮的奶茶，是我们和这座城市打招呼的方式。</p>
+    </div>
+    <div>
+      <h4>门店地址</h4>
+      <p>广东省惠州市惠城区<br>下角东路 12 号 101 铺<br>（西湖东门步行 3 分钟）</p>
+    </div>
+    <div>
+      <h4>联系电话</h4>
+      <p>0752-2288-666</p>
+      <h4 style="margin-top:18px">营业时间</h4>
+      <p>周一至周日<br>10:00 – 22:00</p>
+    </div>
+  </div>
+  <div class="copyright">© 2026 茶小卷 CHA XIAO JUAN · 本页为演示 Demo</div>
+</footer>
+
+</body>
+</html>
